@@ -35,7 +35,7 @@ def get_filtered_data(school_filter, keyword):
 # --- 기존 유틸리티 함수 유지 (수정 없음) ---
 _TITLE_WIDTH_SAFETY_CAP_PX = 25000
 # Title column max width (px); long text uses horizontal scroll in the grid.
-_TITLE_COL_MAX_PX = 480
+_TITLE_COL_MAX_PX = 2000
 _DF_MAX_HEIGHT_BEFORE_SCROLL_PX = 420
 _DF_APPROX_HEADER_PX = 56
 _DF_APPROX_ROW_PX = 36
@@ -81,28 +81,28 @@ if selected_school != "전체" or search_title:
         st.write(f"📊 총 {len(df)}건의 검색 결과")
 
         # 기존 컬럼 너비 설정 유지
-        id_w = _autosize_column_width_px(df["id"], "ID", max_px=360)
-        school_w = _autosize_column_width_px(df["school"], "School", max_px=None, safety_cap_px=900)
+        id_w = _autosize_column_width_px(df["id"], "ID", max_px=200)
+        school_w = _autosize_column_width_px(df["school"], "School", max_px=None, safety_cap_px=200)
         title_w = _autosize_column_width_px(
             df["title"], "Title", max_px=_TITLE_COL_MAX_PX, safety_cap_px=_TITLE_COL_MAX_PX
         )
         
         # 추가된 컬럼 너비 자동 설정
-        pi_w = _autosize_column_width_px(df["pi"], "PI", max_px=220)
+        pi_w = _autosize_column_width_px(df["pi"], "PI", max_px=200)
 
         df_height = _dataframe_height_for_row_count(len(df))
         
         event = st.dataframe(
             df,
-            width="content",
+            use_container_width=True, # 창 크기에 맞게 표 자체는 늘어남
             height=df_height,
             hide_index=True,
             column_order=["id", "school", "pi", "title"],
             column_config={
-                "id": _text_column_aligned("ID", id_w, "center"),
-                "school": _text_column_aligned("School", school_w, "center"),
-                "pi": _text_column_aligned("PI", pi_w, "center"),
-                "title": _text_column_aligned("Title", title_w, "left"),
+                "id": st.column_config.TextColumn("ID", width=id_w, alignment="center"),
+                "school": st.column_config.TextColumn("School", width=school_w, alignment="center"),
+                "pi": st.column_config.TextColumn("PI", width=pi_w, alignment="center"),
+                "title": st.column_config.TextColumn("Title", width=title_w), # 여기서 가로 스크롤 결정됨
                 "name": None,
                 "strategic_field": None,
                 "keywords": None,
@@ -110,7 +110,6 @@ if selected_school != "전체" or search_title:
             on_select="rerun",
             selection_mode="single-row",
         )
-
         selected_rows = event.selection.rows if hasattr(event, "selection") else []
         
         if selected_rows:
