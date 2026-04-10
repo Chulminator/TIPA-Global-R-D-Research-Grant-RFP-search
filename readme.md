@@ -1,7 +1,9 @@
 🔍 Global R&D RFP Integrated Search Engine
+
     This platform is an automated solution designed to manage and explore over 600+ Technology Proposals (RFPs) from global research institutes. It transforms unstructured PDF data into a searchable web-based dashboard.
 
 🚀 Workflow Pipeline
+
     To ensure data accuracy and system performance, the project follows a structured 4-step execution process:
 
     step1 rfp-to-csv.py:
@@ -31,12 +33,14 @@
         Connects to the DB to provide real-time filtering and PDF download links.
 
 ✨ Key Features
+
     Automated ETL: Converts hundreds of complex PDFs into structured data in seconds.
     Multi-Criteria Search: Search by institution, project title, PI name, or technical keywords.
     Optimized UI: Responsive data tables with auto-sizing columns and single-row detail views.
     Direct Access: Integrated download buttons for full RFP packages from global partners.
 
 🛠 Tech Stack
+
     Language: Python 3.x
     Data Processing: Pandas, PyMuPDF (fitz)
     Database: SQLite3
@@ -52,6 +56,7 @@
     └── RFP목록/                 # Source PDF Repository
 
 ⚙️ Setup & Deployment
+
     Install Dependencies
 
     pip install -r requirements.txt
